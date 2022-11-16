@@ -1,28 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useState } from 'react';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
-import 'primereact/resources/themes/arya-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+import logo from "./logo.svg";
+import "./App.css";
+import React, { useState } from "react";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { Menubar } from "primereact/menubar";
+import "primereact/resources/themes/arya-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 
 function App() {
-  const [value1, setValue1] = useState('');
-  const [value2, setValue2] = useState('');
+  const [value1, setValue1] = useState();
+  const [displayDialog, setdisplayDialog] = useState(false);
 
   function addTask() {
-    const task = document.getElementsByClassName("task")[0].value
-    setValue2(task)
+    setdisplayDialog(true);
   }
+
+  const onHide = () => {
+    setdisplayDialog(false);
+    setValue1("")
+  }
+
+  const renderFooter = () => {
+    return (
+      <div>   
+        <Button label="Ok" icon="pi pi-check" onClick={() => onHide()} autoFocus />
+      </div>
+    );
+  }
+
+  const start = <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Logo_Efrei_PAris_2.png?20210113105253" width={150} height={50} />;
+
+  const end = "Mikaël LEGER";
 
   return (
     <div className="App">
-      <div className='container'>
-        <InputText className='task' value={value1} onChange={(e) => setValue1(e.target.value)} />
+      <Menubar className="menubar" start={start} end={end} />
+      <div className="container">
+        <InputText className="task" value={value1} placeholder="Insert task title here" onChange={(e) => setValue1(e.target.value)} />
         <Button label="Submit" aria-label="Submit" onClick={addTask} />
-        <div className='task'>{value2 != "" ? "Task is : " : ""}{value2}</div>
+        <Dialog header="Submission" visible={displayDialog} style={{ width: "50vw" }} footer={renderFooter()} onHide={() => onHide("displayDialog")}>
+          <p>The task {value1} has been submitted with success!</p>
+        </Dialog>
       </div>
     </div>
   );
