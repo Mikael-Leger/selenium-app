@@ -42,7 +42,7 @@ function App() {
         <InputText className="task" value={value1} placeholder="Insert task title here" onChange={(e) => setValue1(e.target.value)} />
         <Button label="Submit" aria-label="Submit" onClick={addTask} />
         <Dialog header="Submission" visible={displayDialog} style={{ width: "50vw" }} footer={renderFooter()} onHide={() => onHide("displayDialog")}>
-          <p>The task {value1} has been submitted with success!</p>
+          <p className="task-success">The task {value1} has been submitted with success!</p>
         </Dialog>
       </div>
     </div>

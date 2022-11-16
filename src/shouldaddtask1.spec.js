@@ -13,12 +13,14 @@ describe('render task 1 on create', function() {
     await driver.quit();
   })
   it('render task 1 on create', async function() {
-    await driver.get("http://localhost:3000/")
-    await driver.manage().window().setRect({ width: 1536, height: 824 })
-    await driver.findElement(By.css(".p-inputtext")).click()
-    await driver.findElement(By.css(".p-inputtext")).sendKeys("Task 1")
-    await driver.findElement(By.css(".p-button")).click()
-    await driver.findElement(By.css(".task"));
+    const taskMock = "Task 1";
+    await driver.get("http://localhost:3000/");
+    await driver.manage().window().setRect({ width: 1536, height: 824 });
+    await driver.findElement(By.css(".p-inputtext")).click();
+    await driver.findElement(By.css(".p-inputtext")).sendKeys(taskMock);
+    await driver.findElement(By.css(".p-button")).click();
+    const taskDisplayed = await driver.findElement(By.css(".task-success")).getText();
+    expect(taskDisplayed).toContain(taskMock);
     await driver.close()
   })
 }, 30000)
